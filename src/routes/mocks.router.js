@@ -11,6 +11,6 @@ router.get("/mockingpets", generatePets);
 
 router.get("/mockingusers", generateUsers);
 
-router.post("/generateData/:users/:pets", generateData);
+router.post("/generateData", generateData);
 
 export default router;

@@ -5,11 +5,14 @@ export async function generateUsersMock(cantidad) {
   const users = [];
   const hashedPassword = await createHash("coder123");
   for (let i = 0; i < cantidad; i++) {
+    let firstName = fa.person.firstName();
+    let lastName = fa.person.lastName();
     users.push({
-      _id: fa.database.mongodbObjectId(),
-      firstName: fa.person.firstName(),
-      lastName: fa.person.lastName(),
-      email: fa.internet.email({ firstName: firstName, lastName: lastName }),
+      first_name: firstName,
+      last_name: lastName,
+      email: fa.internet
+        .email({ firstName: firstName, lastName: lastName })
+        .toLowerCase(),
       password: hashedPassword,
       role: fa.helpers.arrayElement(["admin", "user"]),
       pets: [],

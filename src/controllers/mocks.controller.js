@@ -17,7 +17,6 @@ export async function generatePets(req, res) {
 export async function generateUsers(req, res) {
   try {
     const users = await generateUsersMock(50);
-    console.log("asdff");
     res.status(200).send({ status: "Éxito", payload: users });
     return;
   } catch (error) {
@@ -29,7 +28,7 @@ export async function generateUsers(req, res) {
 
 export async function generateData(req, res) {
   try {
-    const { users, pets } = req.params;
+    const { users, pets } = req.query;
     const usersQty = Number(users);
     const petsQty = Number(pets);
 
@@ -39,7 +38,12 @@ export async function generateData(req, res) {
     await userModel.insertMany(usersMock);
     await petModel.insertMany(petsMock);
 
-    res.status(200).send({ status: "Éxito", message: "Datos en la BD" });
+    res.status(200).send({
+      status: "Éxito",
+      message: "Datos en la BD",
+      usersMock,
+      petsMock,
+    });
   } catch (error) {
     res
       .status(500)

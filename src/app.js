@@ -1,6 +1,7 @@
 import express from "express";
-//import mongoose from "mongoose";
+import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
 
 import usersRouter from "./routes/users.router.js";
 import petsRouter from "./routes/pets.router.js";
@@ -10,7 +11,8 @@ import mocksRouter from "./routes/mocks.router.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-//const connection = mongoose.connect(process.env.MONGODB);
+dotenv.config();
+const connection = mongoose.connect(process.env.MONGO_URI);
 
 app.use(express.json());
 app.use(cookieParser());
