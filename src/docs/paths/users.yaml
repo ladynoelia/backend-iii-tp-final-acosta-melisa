@@ -1,0 +1,112 @@
+paths:
+  /api/users:
+    get:
+      tags:
+        - Users
+      summary: Retorna todos los usuarios.
+      operationId: getAllUsers
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+
+  /api/users/{uid}:
+    get:
+      tags:
+        - Users
+      summary: Retorna un usuario utilizando su ID.
+      operationId: getUser
+      parameters:
+        - name: uid
+          in: path
+          description: ID del usuario
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success. Usuario encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: "#/components/schemas/User"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags:
+        - Users
+      summary: Actualiza un usuario utilizando su ID.
+      operationId: updateUser
+      parameters:
+        - name: uid
+          in: path
+          description: ID del usuario
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: Success. User updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    message:
+                      type: string
+                      example: User updated
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+    delete:
+      tags:
+        - Users
+      summary: Borra un usuario.
+      operationId: deleteUser
+      parameters:
+        - name: uid
+          in: path
+          description: ID del usuario
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success. User deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    message:
+                      type: string
+                      example: User deleted

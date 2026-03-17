@@ -1,0 +1,1000 @@
+{
+     "openapi": "3.0.0",
+     "info": {
+          "title": "Adoptme API Documentation",
+          "version": "1.0.0",
+          "description": "Documentación API Adoptme"
+     },
+     "paths": {
+          "/api/adoptions": {
+               "get": {
+                    "tags": [
+                         "Adoptions"
+                    ],
+                    "summary": "Retorna todas las adopciones.",
+                    "operationId": "getAllAdoptions",
+                    "responses": {
+                         "200": {
+                              "description": "Success.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "payload": {
+                                                       "type": "array",
+                                                       "items": {
+                                                            "$ref": "#/components/schemas/Adoption"
+                                                       }
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    }
+               }
+          },
+          "/api/adoptions/{aid}": {
+               "get": {
+                    "tags": [
+                         "Adoptions"
+                    ],
+                    "summary": "Retorna una adopción utilizando su ID.",
+                    "operationId": "getAdoption",
+                    "parameters": [
+                         {
+                              "name": "aid",
+                              "in": "path",
+                              "description": "ID de la adopción",
+                              "required": true,
+                              "schema": {
+                                   "type": "string"
+                              }
+                         }
+                    ],
+                    "responses": {
+                         "200": {
+                              "description": "Success.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "payload": {
+                                                       "$ref": "#/components/schemas/Adoption"
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         },
+                         "404": {
+                              "$ref": "#/components/responses/NotFound"
+                         }
+                    }
+               }
+          },
+          "/api/adoptions/{uid}/{pid}": {
+               "post": {
+                    "tags": [
+                         "Adoptions"
+                    ],
+                    "summary": "Realiza la adopción de una mascota.",
+                    "operationId": "createAdoption",
+                    "parameters": [
+                         {
+                              "name": "uid",
+                              "in": "path",
+                              "description": "ID del usuario",
+                              "required": true,
+                              "schema": {
+                                   "type": "string"
+                              }
+                         },
+                         {
+                              "name": "pid",
+                              "in": "path",
+                              "description": "ID de la mascota",
+                              "required": true,
+                              "schema": {
+                                   "type": "string"
+                              }
+                         }
+                    ],
+                    "responses": {
+                         "200": {
+                              "description": "Success. Pet adopted",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "message": {
+                                                       "type": "string",
+                                                       "example": "Pet adopted"
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         },
+                         "400": {
+                              "$ref": "#/components/responses/BadRequest"
+                         },
+                         "404": {
+                              "$ref": "#/components/responses/NotFound"
+                         }
+                    }
+               }
+          },
+          "/api/pets": {
+               "get": {
+                    "tags": [
+                         "Pets"
+                    ],
+                    "summary": "Retorna todas las mascotas.",
+                    "operationId": "getAllPets",
+                    "responses": {
+                         "200": {
+                              "description": "Success.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "payload": {
+                                                       "type": "array",
+                                                       "items": {
+                                                            "$ref": "#/components/schemas/Pet"
+                                                       }
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    }
+               },
+               "post": {
+                    "tags": [
+                         "Pets"
+                    ],
+                    "summary": "Registra una mascota en el sistema.",
+                    "operationId": "createPet",
+                    "requestBody": {
+                         "required": true,
+                         "content": {
+                              "application/json": {
+                                   "schema": {
+                                        "$ref": "#/components/schemas/Pet"
+                                   }
+                              }
+                         }
+                    },
+                    "responses": {
+                         "200": {
+                              "description": "Success.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "payload": {
+                                                       "$ref": "#/components/schemas/Pet"
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         },
+                         "400": {
+                              "$ref": "#/components/responses/BadRequest"
+                         }
+                    }
+               }
+          },
+          "/api/pets/withimage": {
+               "post": {
+                    "tags": [
+                         "Pets"
+                    ],
+                    "summary": "Registra una mascota con su foto.",
+                    "operationId": "createPetWithImage",
+                    "requestBody": {
+                         "required": true,
+                         "content": {
+                              "multipart/form-data": {
+                                   "schema": {
+                                        "type": "object",
+                                        "required": [
+                                             "name",
+                                             "specie",
+                                             "birthDate",
+                                             "image"
+                                        ],
+                                        "properties": {
+                                             "name": {
+                                                  "type": "string",
+                                                  "example": "Lola"
+                                             },
+                                             "specie": {
+                                                  "type": "string",
+                                                  "example": "gato"
+                                             },
+                                             "birthDate": {
+                                                  "type": "string",
+                                                  "example": "2026-01"
+                                             },
+                                             "image": {
+                                                  "type": "string"
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    },
+                    "responses": {
+                         "200": {
+                              "description": "Success.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "payload": {
+                                                       "$ref": "#/components/schemas/Pet"
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         },
+                         "400": {
+                              "$ref": "#/components/responses/BadRequest"
+                         }
+                    }
+               }
+          },
+          "/api/pets/{pid}": {
+               "put": {
+                    "tags": [
+                         "Pets"
+                    ],
+                    "summary": "Actualiza una mascota utilizando su ID.",
+                    "operationId": "updatePet",
+                    "parameters": [
+                         {
+                              "name": "pid",
+                              "in": "path",
+                              "description": "ID de la mascota",
+                              "required": true,
+                              "schema": {
+                                   "type": "string"
+                              }
+                         }
+                    ],
+                    "requestBody": {
+                         "required": true,
+                         "content": {
+                              "application/json": {
+                                   "schema": {
+                                        "$ref": "#/components/schemas/PetUpdate"
+                                   }
+                              }
+                         }
+                    },
+                    "responses": {
+                         "200": {
+                              "description": "Success. Pet updated.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "message": {
+                                                       "type": "string",
+                                                       "example": "Pet updated"
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         },
+                         "400": {
+                              "$ref": "#/components/responses/BadRequest"
+                         }
+                    }
+               },
+               "delete": {
+                    "tags": [
+                         "Pets"
+                    ],
+                    "summary": "Elimina una mascota utilizando su ID.",
+                    "operationId": "deletePet",
+                    "parameters": [
+                         {
+                              "name": "pid",
+                              "in": "path",
+                              "description": "ID de la mascota",
+                              "required": true,
+                              "schema": {
+                                   "type": "string"
+                              }
+                         }
+                    ],
+                    "responses": {
+                         "200": {
+                              "description": "Success. Pet deleted.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "message": {
+                                                       "type": "string",
+                                                       "example": "Pet deleted"
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    }
+               }
+          },
+          "/api/sessions/register": {
+               "post": {
+                    "tags": [
+                         "Sessions"
+                    ],
+                    "summary": "Registrar un usuario nuevo",
+                    "operationId": "register",
+                    "requestBody": {
+                         "required": true,
+                         "content": {
+                              "application/json": {
+                                   "schema": {
+                                        "type": "object",
+                                        "required": [
+                                             "first_name",
+                                             "last_name",
+                                             "email",
+                                             "password"
+                                        ],
+                                        "properties": {
+                                             "first_name": {
+                                                  "type": "string",
+                                                  "example": "Marina"
+                                             },
+                                             "last_name": {
+                                                  "type": "string",
+                                                  "example": "Perez García"
+                                             },
+                                             "email": {
+                                                  "type": "string",
+                                                  "example": "marinaperez@email.com"
+                                             },
+                                             "password": {
+                                                  "type": "string",
+                                                  "example": "asdf1234"
+                                             },
+                                             "role": {
+                                                  "type": "string",
+                                                  "example": "user"
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    },
+                    "responses": {
+                         "200": {
+                              "description": "Success. Usuario encontrado",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "payload": {
+                                                       "type": "array",
+                                                       "items": {
+                                                            "$ref": "#/components/schemas/User"
+                                                       }
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         },
+                         "400": {
+                              "$ref": "#/components/responses/BadRequest"
+                         },
+                         "404": {
+                              "$ref": "#/components/responses/NotFound"
+                         }
+                    }
+               }
+          },
+          "/api/sessions/login": {
+               "post": {
+                    "tags": [
+                         "Sessions"
+                    ],
+                    "summary": "Permite a un usuario iniciar sesión.",
+                    "operationId": "login",
+                    "requestBody": {
+                         "required": true,
+                         "content": {
+                              "application/json": {
+                                   "schema": {
+                                        "type": "object",
+                                        "required": [
+                                             "email",
+                                             "password"
+                                        ],
+                                        "properties": {
+                                             "email": {
+                                                  "type": "string",
+                                                  "example": "marinaperez@email.com"
+                                             },
+                                             "password": {
+                                                  "type": "string",
+                                                  "example": "asdf1234"
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    },
+                    "responses": {
+                         "200": {
+                              "description": "Success. Logged in.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success",
+                                                       "message": {
+                                                            "type": "string",
+                                                            "example": "Logged in"
+                                                       }
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         },
+                         "400": {
+                              "$ref": "#/components/responses/BadRequest"
+                         },
+                         "404": {
+                              "$ref": "#/components/responses/NotFound"
+                         }
+                    }
+               }
+          },
+          "/api/sessions/current": {
+               "get": {
+                    "tags": [
+                         "Sessions"
+                    ],
+                    "summary": "Retorna el usuario autenticado mediante JWT",
+                    "operationId": "current",
+                    "responses": {
+                         "200": {
+                              "description": "Success. Usuario encontrado",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "payload": {
+                                                       "$ref": "#/components/schemas/User"
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    }
+               }
+          },
+          "/api/sessions/unprotectedLogin": {
+               "get": {
+                    "tags": [
+                         "Sessions"
+                    ],
+                    "summary": "Inicio de sesión sin DTO, retorna un usuario completo en el token",
+                    "operationId": "unprotectedLogin",
+                    "requestBody": {
+                         "required": true,
+                         "content": {
+                              "application/json": {
+                                   "schema": {
+                                        "type": "object",
+                                        "required": [
+                                             "email",
+                                             "password"
+                                        ],
+                                        "properties": {
+                                             "email": {
+                                                  "type": "string",
+                                                  "example": "marinaperez@email.com"
+                                             },
+                                             "password": {
+                                                  "type": "string",
+                                                  "example": "asdf1234"
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    },
+                    "responses": {
+                         "200": {
+                              "description": "Success. Logged in.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success",
+                                                       "message": {
+                                                            "type": "string",
+                                                            "example": "Logged in"
+                                                       }
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         },
+                         "400": {
+                              "$ref": "#/components/responses/BadRequest"
+                         },
+                         "404": {
+                              "$ref": "#/components/responses/NotFound"
+                         }
+                    }
+               }
+          },
+          "/api/sessions/unprotectedCurrent": {
+               "get": {
+                    "tags": [
+                         "Sessions"
+                    ],
+                    "summary": "Retorna un usuario desde el token sin usar DTO",
+                    "operationId": "unprotectedCurrent",
+                    "responses": {
+                         "200": {
+                              "description": "Success.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "payload": {
+                                                       "type": "object",
+                                                       "items": {
+                                                            "$ref": "#/components/schemas/User"
+                                                       }
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    }
+               }
+          },
+          "/api/users": {
+               "get": {
+                    "tags": [
+                         "Users"
+                    ],
+                    "summary": "Retorna todos los usuarios.",
+                    "operationId": "getAllUsers",
+                    "responses": {
+                         "200": {
+                              "description": "Success.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "payload": {
+                                                       "type": "array",
+                                                       "items": {
+                                                            "$ref": "#/components/schemas/User"
+                                                       }
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    }
+               }
+          },
+          "/api/users/{uid}": {
+               "get": {
+                    "tags": [
+                         "Users"
+                    ],
+                    "summary": "Retorna un usuario utilizando su ID.",
+                    "operationId": "getUser",
+                    "parameters": [
+                         {
+                              "name": "uid",
+                              "in": "path",
+                              "description": "ID del usuario",
+                              "required": true,
+                              "schema": {
+                                   "type": "string"
+                              }
+                         }
+                    ],
+                    "responses": {
+                         "200": {
+                              "description": "Success. Usuario encontrado",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success"
+                                                  },
+                                                  "payload": {
+                                                       "$ref": "#/components/schemas/User"
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         },
+                         "404": {
+                              "$ref": "#/components/responses/NotFound"
+                         }
+                    }
+               },
+               "put": {
+                    "tags": [
+                         "Users"
+                    ],
+                    "summary": "Actualiza un usuario utilizando su ID.",
+                    "operationId": "updateUser",
+                    "parameters": [
+                         {
+                              "name": "uid",
+                              "in": "path",
+                              "description": "ID del usuario",
+                              "required": true,
+                              "schema": {
+                                   "type": "string"
+                              }
+                         }
+                    ],
+                    "requestBody": {
+                         "required": true,
+                         "content": {
+                              "application/json": {
+                                   "schema": {
+                                        "$ref": "#/components/schemas/User"
+                                   }
+                              }
+                         }
+                    },
+                    "responses": {
+                         "200": {
+                              "description": "Success. User updated.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success",
+                                                       "message": {
+                                                            "type": "string",
+                                                            "example": "User updated"
+                                                       }
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         },
+                         "404": {
+                              "$ref": "#/components/responses/NotFound"
+                         }
+                    }
+               },
+               "delete": {
+                    "tags": [
+                         "Users"
+                    ],
+                    "summary": "Borra un usuario.",
+                    "operationId": "deleteUser",
+                    "parameters": [
+                         {
+                              "name": "uid",
+                              "in": "path",
+                              "description": "ID del usuario",
+                              "required": true,
+                              "schema": {
+                                   "type": "string"
+                              }
+                         }
+                    ],
+                    "responses": {
+                         "200": {
+                              "description": "Success. User deleted.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "object",
+                                             "properties": {
+                                                  "status": {
+                                                       "type": "string",
+                                                       "example": "success",
+                                                       "message": {
+                                                            "type": "string",
+                                                            "example": "User deleted"
+                                                       }
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    }
+               }
+          }
+     },
+     "components": {
+          "responses": {
+               "BadRequest": {
+                    "description": "Bad Request. Parámetros inválidos o incompletos",
+                    "content": {
+                         "application/json": {
+                              "schema": {
+                                   "$ref": "#/components/schemas/Error"
+                              },
+                              "example": {
+                                   "status": "error",
+                                   "error": "Incomplete values"
+                              }
+                         }
+                    }
+               },
+               "NotFound": {
+                    "description": "Elemento no encontrado",
+                    "content": {
+                         "application/json": {
+                              "schema": {
+                                   "$ref": "#/components/schemas/Error"
+                              },
+                              "example": {
+                                   "status": "error",
+                                   "error": "Resource not found"
+                              }
+                         }
+                    }
+               },
+               "ServerError": {
+                    "description": "Internal server error",
+                    "content": {
+                         "application/json": {
+                              "schema": {
+                                   "$ref": "#/components/schemas/Error"
+                              },
+                              "example": {
+                                   "status": "error",
+                                   "error": "Internal server error"
+                              }
+                         }
+                    }
+               }
+          },
+          "schemas": {
+               "Adoption": {
+                    "type": "object",
+                    "required": [
+                         "owner",
+                         "pet"
+                    ],
+                    "properties": {
+                         "_id": {
+                              "type": "string",
+                              "description": "ID de la adopción",
+                              "example": "69872e87bcda015e157ebb73"
+                         },
+                         "owner": {
+                              "type": "string",
+                              "description": "ID del usuario",
+                              "example": "69872e87bcda015e157ebb74"
+                         },
+                         "pet": {
+                              "type": "string",
+                              "description": "ID de la mascota adoptada",
+                              "example": "69872e87bcda015e157ebb72"
+                         }
+                    }
+               },
+               "Error": {
+                    "type": "object",
+                    "properties": {
+                         "status": {
+                              "type": "string",
+                              "example": "error"
+                         },
+                         "error": {
+                              "type": "string",
+                              "example": "User not found"
+                         }
+                    }
+               },
+               "Pet": {
+                    "type": "object",
+                    "properties": {
+                         "_id": {
+                              "type": "string",
+                              "example": "69872e87bcda015e157ebb76"
+                         },
+                         "name": {
+                              "type": "string",
+                              "example": "Lola"
+                         },
+                         "specie": {
+                              "type": "string",
+                              "example": "gato"
+                         },
+                         "birthDate": {
+                              "type": "string",
+                              "example": "2026-01"
+                         },
+                         "adopted": {
+                              "type": "boolean",
+                              "example": true
+                         },
+                         "image": {
+                              "type": "string",
+                              "example": "./images/pets/004-1.jpg"
+                         }
+                    }
+               },
+               "PetUpdate": {
+                    "type": "object",
+                    "required": [
+                         "name",
+                         "specie",
+                         "birthDate"
+                    ],
+                    "properties": {
+                         "name": {
+                              "type": "string",
+                              "example": "Lola"
+                         },
+                         "specie": {
+                              "type": "string",
+                              "example": "gato"
+                         },
+                         "birthDate": {
+                              "type": "string",
+                              "example": "2026-01"
+                         }
+                    }
+               },
+               "User": {
+                    "type": "object",
+                    "properties": {
+                         "_id": {
+                              "type": "string",
+                              "example": "69872e87bcda015e157ebb73"
+                         },
+                         "first_name": {
+                              "type": "string",
+                              "example": "Marina"
+                         },
+                         "last_name": {
+                              "type": "string",
+                              "example": "Perez García"
+                         },
+                         "email": {
+                              "type": "string",
+                              "example": "marinaperez@email.com"
+                         },
+                         "role": {
+                              "type": "string",
+                              "example": "user"
+                         },
+                         "pets": {
+                              "type": "array",
+                              "items": {
+                                   "$ref": "#/components/schemas/Pet"
+                              }
+                         }
+                    }
+               },
+               "UserUpdate": {
+                    "type": "object",
+                    "properties": {
+                         "first_name": {
+                              "type": "string",
+                              "example": "Marina"
+                         },
+                         "last_name": {
+                              "type": "string",
+                              "example": "Perez García"
+                         },
+                         "email": {
+                              "type": "string",
+                              "example": "marinaperez@email.com"
+                         },
+                         "role": {
+                              "type": "string",
+                              "example": "user"
+                         }
+                    }
+               }
+          }
+     },
+     "tags": []
+}

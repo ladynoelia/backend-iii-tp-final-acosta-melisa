@@ -1,0 +1,177 @@
+paths:
+  /api/sessions/register:
+    post:
+      tags:
+        - Sessions
+      summary: Registrar un usuario nuevo
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - email
+                - password
+              properties:
+                first_name:
+                  type: string
+                  example: Marina
+                last_name:
+                  type: string
+                  example: Perez García
+                email:
+                  type: string
+                  example: marinaperez@email.com
+                password:
+                  type: string
+                  example: asdf1234
+                role:
+                  type: string
+                  example: user
+      responses:
+        "200":
+          description: Success. Usuario encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/sessions/login:
+    post:
+      tags:
+        - Sessions
+      summary: Permite a un usuario iniciar sesión.
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: marinaperez@email.com
+                password:
+                  type: string
+                  example: asdf1234
+      responses:
+        "200":
+          description: Success. Logged in.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    message:
+                      type: string
+                      example: Logged in
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/sessions/current:
+    get:
+      tags:
+        - Sessions
+      summary: Retorna el usuario autenticado mediante JWT
+      operationId: current
+      responses:
+        "200":
+          description: Success. Usuario encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: "#/components/schemas/User"
+
+  /api/sessions/unprotectedLogin:
+    get:
+      tags:
+        - Sessions
+      summary: Inicio de sesión sin DTO, retorna un usuario completo en el token
+      operationId: unprotectedLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: marinaperez@email.com
+                password:
+                  type: string
+                  example: asdf1234
+      responses:
+        "200":
+          description: Success. Logged in.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    message:
+                      type: string
+                      example: Logged in
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/sessions/unprotectedCurrent:
+    get:
+      tags:
+        - Sessions
+      summary: Retorna un usuario desde el token sin usar DTO
+      operationId: unprotectedCurrent
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: object
+                    items:
+                      $ref: "#/components/schemas/User"

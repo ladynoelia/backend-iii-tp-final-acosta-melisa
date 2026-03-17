@@ -1,0 +1,89 @@
+paths:
+  /api/adoptions:
+    get:
+      tags:
+        - Adoptions
+      summary: Retorna todas las adopciones.
+      operationId: getAllAdoptions
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Adoption"
+
+  /api/adoptions/{aid}:
+    get:
+      tags:
+        - Adoptions
+      summary: Retorna una adopción utilizando su ID.
+      operationId: getAdoption
+      parameters:
+        - name: aid
+          in: path
+          description: ID de la adopción
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: "#/components/schemas/Adoption"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/adoptions/{uid}/{pid}:
+    post:
+      tags:
+        - Adoptions
+      summary: Realiza la adopción de una mascota.
+      operationId: createAdoption
+      parameters:
+        - name: uid
+          in: path
+          description: ID del usuario
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description: ID de la mascota
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success. Pet adopted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Pet adopted
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"

@@ -1,0 +1,20 @@
+components:
+  schemas:
+    Adoption:
+      type: object
+      required:
+        - owner
+        - pet
+      properties:
+        _id:
+          type: string
+          description: ID de la adopción
+          example: 69872e87bcda015e157ebb73
+        owner:
+          type: string
+          description: ID del usuario
+          example: 69872e87bcda015e157ebb74
+        pet:
+          type: string
+          description: ID de la mascota adoptada
+          example: 69872e87bcda015e157ebb72

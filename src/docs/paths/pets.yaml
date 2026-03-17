@@ -1,0 +1,156 @@
+paths:
+  /api/pets:
+    get:
+      tags:
+        - Pets
+      summary: Retorna todas las mascotas.
+      operationId: getAllPets
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Pet"
+    post:
+      tags:
+        - Pets
+      summary: Registra una mascota en el sistema.
+      operationId: createPet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pet"
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: "#/components/schemas/Pet"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /api/pets/withimage:
+    post:
+      tags:
+        - Pets
+      summary: Registra una mascota con su foto.
+      operationId: createPetWithImage
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - specie
+                - birthDate
+                - image
+              properties:
+                name:
+                  type: string
+                  example: Lola
+                specie:
+                  type: string
+                  example: gato
+                birthDate:
+                  type: string
+                  example: 2026-01
+                image:
+                  type: string
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: "#/components/schemas/Pet"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /api/pets/{pid}:
+    put:
+      tags:
+        - Pets
+      summary: Actualiza una mascota utilizando su ID.
+      operationId: updatePet
+      parameters:
+        - name: pid
+          in: path
+          description: ID de la mascota
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PetUpdate"
+      responses:
+        "200":
+          description: Success. Pet updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Pet updated
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+    delete:
+      tags:
+        - Pets
+      summary: Elimina una mascota utilizando su ID.
+      operationId: deletePet
+      parameters:
+        - name: pid
+          in: path
+          description: ID de la mascota
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success. Pet deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Pet deleted

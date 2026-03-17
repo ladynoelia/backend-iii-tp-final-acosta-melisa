@@ -1,0 +1,31 @@
+components:
+  responses:
+    BadRequest:
+      description: Bad Request. Parámetros inválidos o incompletos
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            status: error
+            error: Incomplete values
+
+    NotFound:
+      description: Elemento no encontrado
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            status: error
+            error: Resource not found
+
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            status: error
+            error: Internal server error

@@ -1,0 +1,40 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 69872e87bcda015e157ebb73
+        first_name:
+          type: string
+          example: Marina
+        last_name:
+          type: string
+          example: Perez García
+        email:
+          type: string
+          example: marinaperez@email.com
+        role:
+          type: string
+          example: user
+        pets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pet"
+
+    UserUpdate:
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: Marina
+        last_name:
+          type: string
+          example: Perez García
+        email:
+          type: string
+          example: marinaperez@email.com
+        role:
+          type: string
+          example: user

@@ -1,0 +1,40 @@
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 69872e87bcda015e157ebb76
+        name:
+          type: string
+          example: Lola
+        specie:
+          type: string
+          example: gato
+        birthDate:
+          type: string
+          example: 2026-01
+        adopted:
+          type: boolean
+          example: true
+        image:
+          type: string
+          example: ./images/pets/004-1.jpg
+
+    PetUpdate:
+      type: object
+      required:
+        - name
+        - specie
+        - birthDate
+      properties:
+        name:
+          type: string
+          example: Lola
+        specie:
+          type: string
+          example: gato
+        birthDate:
+          type: string
+          example: 2026-01
