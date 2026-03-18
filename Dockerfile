@@ -1,4 +1,4 @@
-FROM node:22.14.0
+FROM node:22.14.0-alpine
 
 WORKDIR /app
 
@@ -11,6 +11,3 @@ COPY ./src ./src
 EXPOSE 8080
 
 CMD [ "npm", "start" ]
-
-
-
